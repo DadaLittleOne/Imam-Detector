@@ -1,16 +1,27 @@
 #include <stdio.h>
 #include <string.h>
 
+const int x = 32;
+
 struct Person // Struct for a person
 {
     char name[255];
     char title[255];
     char favFood[255];
     char favColour[255];
+    int hasBeard;
 
     int percent;
     float weight;
 };
+
+char *toLowerCase(char *a)
+{
+    for (int i = 0; a[i] != '\0'; i++)
+        a[i] = a[i] | x;
+
+    return a;
+}
 
 int main() // Main Function
 {
@@ -33,21 +44,39 @@ int main() // Main Function
     printf("\nPlease enter weight of person: ");
     scanf("%f", &person.weight);
 
-    if (strcmp(person.title, "sheikh") == 0 || strcmp(person.title, "imam") == 0 || strcmp(person.title, "ustaadh") == 0)
+    char yn = 'N';
+    printf("\nDoes the person have a beard?: (Y / N) ");
+    fflush(stdin);
+    scanf("%c", &yn);
+
+    if (strcmp(toLowerCase(&yn), "y"))
+    {
+        person.hasBeard = 1;
+    }
+    else
+    {
+        person.hasBeard = 0;
+    }
+
+    if (strcmp(toLowerCase(person.title), "sheikh") == 0 || strcmp(toLowerCase(person.title), "imam") == 0 || strcmp(toLowerCase(person.title), "ustaadh") == 0)
     {
         person.percent += 100;
     }
-    if (strcmp(person.favFood, "sweets") == 0)
+    if (strcmp(toLowerCase(person.favFood), "sweets") == 0)
     {
-        person.percent += 33;
+        person.percent += 25;
     }
-    if (strcmp(person.favColour, "red") == 0)
+    if (strcmp(toLowerCase(person.favColour), "red") == 0)
     {
-        person.percent += 33;
+        person.percent += 25;
     }
     if (person.weight >= 60)
     {
-        person.percent += 34;
+        person.percent += 25;
+    }
+    if (person.hasBeard == 1)
+    {
+        person.percent += 25;
     }
 
     int drip = 0;
